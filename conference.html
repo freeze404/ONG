@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ONG</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            button { margin: 10px; padding: 15px 20px; font-size: 15px; border-radius: 10px; border: none; cursor: pointer;background-color: rgb(77, 145, 255);color: white; }
+            #formContainer {position: absolute; display: none; flex-direction: column;width: 100%;height: 100%; align-items: center;justify-content: center; background-color: rgb(127, 175, 252); z-index: 99; }
+            input { margin: 5px; padding: 10px; width: 200px; }
+            iframe { margin-top: 20px; width: 100%; height: 80vh; border: 0; }
+            #conferenceContainer { position: absolute;display: none;flex-direction: column;width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.8);backdrop-filter: blur(10px);justify-content: center;align-items: center; z-index: 99;}
+            /* Animations */
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes scaleIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            .animate-fadeIn {
+                animation: fadeIn 1s ease-out forwards;
+            }
+            .animate-slideUp {
+                animation: slideUp 0.8s ease-out forwards;
+            }
+            .animate-scaleIn {
+                animation: scaleIn 0.6s ease-out forwards;
+            }
+            .animate-delay-1 {
+                animation-delay: 0.2s;
+            }
+            .animate-delay-2 {
+                animation-delay: 0.4s;
+            }
+            .animate-delay-3 {
+                animation-delay: 0.6s;
+            }
+            [data-animate] {
+                opacity: 0;
+            }
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="container">
+            <div  id="formContainer">
+                <div data-animate="slideUp" style="position: fixed; width: auto; height: auto; padding: 20px; top: 10px; left: 10px; z-index: 99;">
+                    <div id="back_home_1" style="display: flex; width: 70px; height: 35px; background-color: black; border-radius: 30px; justify-content: center; align-items: center; transform: rotate(180deg);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px; color:white;"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </div>
+                </div>
+                <p data-animate="slideUp" style="font-size: 40px;font-weight: bold;color: white;margin-bottom: 40px;">•APROVDHAF-CONFERENCE</p>
+                <input data-animate="slideUp" type="text" id="username" placeholder="Nom d'utilisateur" required style="width: 300px;height: 30px;background-color: white;border: none;border-radius: 10px;margin: 5px;padding: 10px;">
+                <input data-animate="slideUp" type="text" id="nameConf" placeholder="Titre de la conference" required style="width: 300px;height: 30px;background-color: white;border: none;border-radius: 10px;margin: 5px;padding: 10px;">
+                <input data-animate="slideUp" type="text" id="password" placeholder="Code conférence" required style="width: 300px;height: 30px;background-color: white;border: none;border-radius: 10px;margin: 5px;padding: 10px;">
+                <div data-animate="slideUp" id="startConf"  style="display: flex; width: 150px; height: 50px; border-radius: 10px; justify-content: center; align-items: center;background-color: white;margin-top: 10px;">
+                    <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; color:rgb(130, 175, 248); font-size: 15px;text-align: center;">Commencer</p>
+                </div>
+            </div>
+            <div id="conferenceContainer">
+                <div data-animate="slideUp" style="position: fixed; width: auto; height: auto; padding: 20px; top: 10px; left: 10px; z-index: 99;">
+                    <div id="back_home_" style="display: flex; width: 70px; height: 35px; background-color: black; border-radius: 30px; justify-content: center; align-items: center; transform: rotate(180deg);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px; color:white;"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </div>
+                </div>
+                <div id="conferenceView" style="overflow: hidden; width: 80%;height: auto;background-color: black;border-radius: 20px;padding-top: -20px;"></div>
+            </div>
+            <div class="header">
+                <div style="display: flex; width: 200px; height: 100%; flex-direction: row; justify-content: center; align-items: center; margin-left: 10px;">
+                    <div style="width: 45px;height: 45px;border-radius: 50px;background-image: url('./img/Logo.png');background-position: center 4px;background-size: 56px 60px;scale: 1.2;margin-top: -8px;"></div>
+                    <a href="index.html"><p class="title">APROVDHAF</p></a>
+                </div>
+                <div style="display: flex;width: 780px;height: 100%;flex-direction: row;align-items: center;">
+                    <a  href="index.html" id="bt" style="display: flex;width: 100px;height: 100%;border-bottom: 3px solid rgba(0, 0, 0, 0);justify-content: center;align-items: center;">
+                        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size: 15px;">Accueil</p>
+                    </a>
+                    <a href="missions.html" id="bt" style="display: flex;width: 120px;height: 100%;border-bottom: 3px solid rgba(0, 0, 0, 0);justify-content: center;align-items: center;margin-left: 5px;">
+                        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size: 15px;">Notre mission</p>
+                    </a>
+                    <a href="projects.html" id="bt" style="display: flex;width: 100px;height: 100%;border-bottom: 3px solid rgba(0, 0, 0, 0);justify-content: center;align-items: center;margin-left: 5px;">
+                        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size: 15px;">Projects</p>
+                    </a>
+                    <a href="benevol.html" id="bt" style="display: flex; width: 140px; height: 100%; border-bottom: 3px solid rgba(0, 0, 0, 0); justify-content: center; align-items: center; margin-left: 5px;">
+                        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 15px;">Devenir Bénévole</p>
+                    </a>
+                    <a href="conference.html" id="bt" style="display: flex; width: 130px; height: 100%; border-bottom: 3px solid rgb(102, 161, 255); justify-content: center; align-items: center; margin-left: 5px;">
+                        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 15px;">Conférences</p>
+                    </a>
+                    <div id="btnblack" style="display: flex; width: 110px; height: 40px; border-radius: 10px; justify-content: center; align-items: center; margin-left: 30px;">
+                        <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; color:white; font-size: 15px;">Faire un don</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ctn2_" data-animate="fadeIn">
+                <div style="position: relative;width: 100%;height: 100%;z-index: 1;background: linear-gradient(to top, #ffffff3e, #f0f0f0e7);"></div>
+                <div style="display: flex;position: relative;width: 100%;height: 100%;flex-direction: column;align-items: center;padding-top: 20px;z-index: 2;margin-top: -90px;">
+                    <p style="font-size: 50px;font-weight: bold;color: rgb(77, 145, 255);"> Espace Conférence  APROVDHAF</p>
+                </div>
+            </div>
+            <center>
+                <div style="flex-direction: row;display: flex;width: auto;height: auto;justify-content: center;align-items: center;">
+                        <div data-animate="slideUp" style="width: 170px;height: 400px; border-radius: 200px;margin: 10px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                            background-image: url('./img/Conf-4.jpg');
+                            background-size: cover;
+                            background-position: -350px 0px;"></div>
+                        <div data-animate="slideUp" style="width: 200px;height: 300px; border-radius: 200px;margin: 10px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                            background-image: url('./img/Conf-2.jpg');
+                            background-size: cover;
+                            background-position: -50px 0px;"></div>
+                        <div data-animate="slideUp" style="width: 170px;height: 400px; border-radius: 200px;margin: 10px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                            background-image: url('./img/Conf-1.jpg');
+                            background-size: cover;
+                            background-position: -350px 0px;"></div>
+                        <div data-animate="slideUp" style="width: 190px;height: 320px; border-radius: 200px;margin: 10px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                            background-image: url('./img/Conf-3.jpg');
+                            background-size: cover;
+                            background-position: -200px 0px;"></div>
+                        <div data-animate="slideUp" style="width: 200px;height: 200px; border-radius: 200px;margin: 10px;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                            background-image: url('./img/Conf-5.jpg');
+                            background-size: cover;
+                            background-position: -0px 0px;"></div>
+                </div>
+                <br>
+                <button id="launchBtn" style="display: none;">Lancer la conférence</button>
+                <button id="join">Participer à la conférence</button><br>
+                <div id="ref" style="display: none;flex-direction: row;width: auto;height: auto;margin-top: 10px;justify-content: center;align-items: center;">
+                    <input id="refVal" type="text" value="" placeholder="Code de la conférence" style="border: 1px solid silver;width: 200px;height: 30px;border-radius: 10px;">
+                    <button id="joinBtn">Joindre</button>
+                </div>
+            </center>
+
+   
+
+            <div class="footer">
+                <div style="width: 300px;height: auto;padding: 10px;">
+                    <p style="font-size: 25px;font-weight: bold;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgb(102, 161, 255);">APROVDHAF</p><br>
+                    <p style="font-size: 14px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);">Ensemble, nous construisons un avenir meilleur pour les communautés dans le besoin. Rejoignez notre mission et faites partie du changement.</p>
+                    <div style="display: flex;flex-direction: row;width: auto;height: auto;margin-top: 20px;">
+                        <div id="rsx" style="display: flex;width: 40px;height: 40px;border: 1px solid rgba(192, 192, 192, 0.4);border-radius: 5px;justify-content: center;align-items: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: gray;"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </div>
+                        
+                        <!-- <div id="rsx" style="display: flex;width: 40px;height: 40px;border: 1px solid rgba(192, 192, 192, 0.4);border-radius: 5px;justify-content: center;align-items: center;margin-left: 20px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: gray;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </div>
+
+                        <div id="rsx" style="display: flex;width: 40px;height: 40px;border: 1px solid rgba(192, 192, 192, 0.4);border-radius: 5px;justify-content: center;align-items: center;margin-left: 20px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: gray;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div style="width: 200px;height: auto;margin-left: 150px;margin-top: 10px;">
+                    <p style="font-size: 20px;font-weight: bold;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Liens Rapides</p><br><br>
+                    <p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);">• Notre Mission</p><br>
+                    <p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);">• Nos Projets</p><br>
+                    <p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);">• Devenir Bénévole</p><br>
+                    <p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);">• Actualités</p><br>
+                </div>
+
+                <div style="width: auto;height: auto;margin-left: 300px;margin-top: 10px;">
+                    <p style="font-size: 20px;font-weight: bold;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Contacts</p><br><br>
+                    <div style="display: flex;flex-direction: row;width: auto;height: auto;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);margin-left: 5px;">(+237) 697 60 17 88 , 672 58 11 21 </p>
+                    </div>
+                     <div style="display: flex;flex-direction: row;width: auto;height: auto;margin-top: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail h-5 w-5 text-primary"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                        <a href="mailto:aprovdhaf22005477@gmail.com"><p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);margin-left: 5px;">aprovdhaf22005477@gmail.com</p></a>
+                    </div>
+                     <div style="display: flex;flex-direction: row;width: auto;height: auto;margin-top: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin h-5 w-5 text-primary mt-1"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <p style="font-size: 15px;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgba(0, 0, 0, 0.6);margin-left: 5px;">Avenue Kennedy (Au-dessus de la Pharmacie française)</p>
+                    </div>
+                </div>
+
+            </div>
+            
+
+        </div>
+
+
+
+        <script src="script.js"></script>
+        <script src='https://meet.jit.si/external_api.js'></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Animation d'intersection pour les éléments avec data-animate
+                const animateElements = document.querySelectorAll('[data-animate]');
+
+                const launchBtn = document.getElementById('launchBtn');
+                const join = document.getElementById('join');
+                const joinBtn = document.getElementById('joinBtn');
+                const referencerConf = document.getElementById('ref');
+                const refValue = document.getElementById('refVal');
+                const formContainer = document.getElementById('formContainer');
+                const startConf = document.getElementById('startConf');
+                const conferenceContainer = document.getElementById('conferenceView');
+                const ViewConf = document.getElementById('conferenceContainer');
+                const closeConf = document.getElementById('back_home_');
+                const closeConf_ = document.getElementById('back_home_1');
+
+                 const correctPassword = "123"; // Ton mot de passe que toi seul connais
+
+
+                launchBtn.onclick = () => {
+                    formContainer.style.display = 'flex';
+                    conferenceContainer.innerHTML = ''; // Nettoyer si déjà une conférence
+                };
+                closeConf.onclick = () =>{
+                    ViewConf.style.display = 'none'
+                }
+                closeConf_.onclick = () =>{
+                    formContainer.style.display = 'none'
+                }
+                
+                joinBtn.onclick = () => {
+                    const ref_val=refValue.value;
+                    if(ref_val != ''){
+                        formContainer.style.display = 'none';
+                        conferenceContainer.innerHTML = '';
+                    
+                        startConference("", ref_val,false);
+                    }
+                    
+                };
+
+                 join.onclick = () => {
+                    referencerConf.style.display = 'flex';
+                    join.style.backgroundColor = 'silver';
+                };
+
+                startConf.onclick = () => {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const title = document.getElementById('nameConf').value;
+                    formContainer.style.display = 'none';
+                    const roomName = title+"-"+password;
+                    startConference_(username, roomName,true);
+                    // if (password === correctPassword) {
+                    //     formContainer.style.display = 'none';
+                    //     startConference(username, true);
+                    // } else {
+                    //     alert("Mot de passe incorrect !");
+                    // }
+                };
+
+                function startConference(username, roomName,isModerator) {
+                    ViewConf.style.display = 'flex';
+                const options = {
+                    roomName: roomName,
+                    width: "100%",
+                    height: 600,
+                    parentNode: conferenceContainer,
+                    userInfo: { displayName: username || "Participant" },
+                    configOverwrite: {},
+                    interfaceConfigOverwrite: {}
+                };
+
+                const api = new JitsiMeetExternalAPI("meet.jit.si", options);
+
+            // Optionnel : si animateur, tu pourrais ici envoyer un message ou configurer d'autres choses
+                    if (isModerator) {
+                        console.log("Animateur connecté :", username);
+                    }
+                }
+
+                function startConference_(username, roomName,isModerator) {
+                    ViewConf.style.display = 'flex';
+                const options = {
+                    roomName: roomName,
+                    width: "100%",
+                    height: 600,
+                    parentNode: conferenceContainer,
+                    userInfo: { displayName: username || "Participant" },
+                    configOverwrite: {},
+                    interfaceConfigOverwrite: {}
+                };
+
+                const api = new JitsiMeetExternalAPI("meet.jit.si", options);
+
+            // Optionnel : si animateur, tu pourrais ici envoyer un message ou configurer d'autres choses
+                    if (isModerator) {
+                        console.log("Animateur connecté :", username);
+                    }
+                }
+
+                document.addEventListener('keydown', function(event) {if (event.ctrlKey && event.key === 'k' ) {event.preventDefault();formContainer.style.display = 'flex';conferenceContainer.innerHTML = '';}});
+                
+                if (animateElements.length > 0) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const animationType = entry.target.getAttribute('data-animate');
+                                const delay = entry.target.getAttribute('data-delay');
+                                
+                                // Ajouter la classe d'animation principale
+                                entry.target.classList.add(`animate-${animationType}`);
+                                
+                                // Ajouter la classe de délai seulement si elle existe
+                                if (delay) {
+                                    entry.target.classList.add(delay);
+                                }
+                                
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, {
+                        threshold: 0.1
+                    });
+
+                    animateElements.forEach(el => observer.observe(el));
+                }
+            });
+        </script>
+    </body>
+</html>

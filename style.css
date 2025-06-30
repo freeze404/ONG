@@ -17,13 +17,14 @@ p{
 a{
     text-decoration: none;
     outline: none;
+    color: #000;
 }
 .header{
     display: flex;
     position: absolute;
     top: 0;
     width: 100%;
-    height: 60px;
+    height: 75px;
     flex-direction: row;
     justify-content: space-between;
     background-color: rgba(255, 255, 255, 0.6);
@@ -35,7 +36,8 @@ a{
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 18px;
     font-weight: bold;
-    color:rgb(102, 161, 255);
+    color:rgb(77, 145, 255);
+    margin-left: 10px;
 }
 .ctn1 {
     display: flex;
@@ -43,9 +45,44 @@ a{
     height: 420px;
     margin-top: 60px;
     flex-direction: column;
-    background-image: url('./img/IMG-20250614-WA0012.jpg');
-    background-size: cover;
-    background-position: 0px -20px;
+    position: relative;
+    overflow: hidden;
+    background-image:
+    url('./img/IMG-20250614-WA0003.jpg');
+    background-size: cover; /* Chaque image couvre toute la zone */
+    background-position: 0px -70px; /* Centre chaque image */
+    background-repeat: no-repeat; /* Ne répète pas les images */
+
+    /* L'animation principale qui manipule la visibilité des couches d'images */
+    /* animation: background-slideshow 15s infinite;
+    animation-duration: 15s; */
+}
+.ctn1_ {
+    display: flex;
+    width: 100%;
+    height: 220px;
+    margin-top: 60px;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+}
+.ctn2_ {
+    display: flex;
+    width: 100%;
+    height: 120px;
+    margin-top: 60px;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+}
+.ctn3_ {
+    display: flex;
+    width: 100%;
+    height: 480px;
+    margin-top: 60px;
+    flex-direction: column;
+    background-image:
+    url('./img/benevol.jpg');
+    background-size: cover; /* Chaque image couvre toute la zone */
+    background-position: 0px 0px; /* Centre chaque image */
     background-repeat: no-repeat;
 }
 .ctn2{
@@ -94,10 +131,20 @@ a{
     display: flex;
     flex-direction: row;
 }
+.footer_{
+    width: 100%;
+    height: 300px;
+    margin-top: 0px;
+    border-top: 1px solid rgba(192, 192, 192, 0.3);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+}
 
 #bt:hover{
-    background-color: rgba(102, 161, 255,0.15);
-    backdrop-filter: blur(10px);
+    background-color: rgba(214, 214, 214, 0.2);
+    scale: 1.04;
+    transition: all 0.3s ease;
 }
 #btnblack , #btn_actions{
     background-color: rgb(102, 161, 255);
@@ -113,10 +160,15 @@ a{
     background-color: rgba(192, 192, 192, 0.2);
 }
 #btnblack:hover , #btn_actions:hover{
-    background-color: rgba(102, 161, 255,0.6);
+    background-color: rgba(102, 161, 255,0.8);
+    transform: translateY(-3px);
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
+    transition: all 0.3s ease;
 }
 #scl:hover{
-    scale: 1.08;
+    transform: scale(1.04);
+    transition: transform 0.3s ease;
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
 }
 #rsx:hover{
     background-color: rgba(219, 219, 219, 0.6);
@@ -125,11 +177,11 @@ a{
 
 
 #actions_contain::-webkit-scrollbar,.container::-webkit-scrollbar{
-    width: 5px;
+    width: 0px;
     height: 100%;
 }
 #actions_contain::-webkit-scrollbar-track,.container::-webkit-scrollbar-track{
-    background: rgba(255, 255, 255, 0);
+    background: none;
     border-radius: 10px;
 }
 #actions_contain::-webkit-scrollbar-thumb,.container::-webkit-scrollbar-thumb{
@@ -141,3 +193,20 @@ a{
 #actions_contain::-webkit-scrollbar-button,.container::-webkit-scrollbar-button{
     display: none;
 }
+
+@keyframes background-slideshow {
+  /* Image 1 (IMG-20250614-WA0012.jpg) */
+    0%{
+        background-image: url('./img/IMG-20250614-WA0012.jpg');
+    }
+    33.33%{
+        background-image: url('./img/IMG-20250614-WA0008.jpg');
+    }
+    66.66%{
+        background-image: url('./img/IMG-20250614-WA0003.jpg');
+    }
+    100%{
+        background-image: url('./img/IMG-20250614-WA0012.jpg');
+    }
+}
+
